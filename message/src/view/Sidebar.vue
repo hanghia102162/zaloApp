@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex w-110">
+  <div class="h-screen flex w-110 relative">
     <div class="h-screen w-[25%] bg-blue-500 flex flex-col justify-between p-5">
       <div ref="menuBox" class="relative inline-block z-50">
         <button
@@ -20,7 +20,7 @@
 
           <!-- Box -->
           <div class="bg-white rounded-xl shadow-lg p-4 w-56">
-            <h1 class="font-semibold mb-2">Hà Trọng Nghĩa</h1>
+            <h1 class="font-semibold mb-2">{{ userStore.user.name }}</h1>
 
             <ul class="space-y-2 text-sm">
               <li>
@@ -132,7 +132,7 @@
               <div
                 class="flex w-full gap-2 flex-col rounded-xl shadow-[0_2px_12px_-4px_rgba(0,0,0,0.2)]"
               >
-                <button>Đăng xuất</button>
+                <button @click="LogOut()">Đăng xuất</button>
                 <button>Thoát</button>
               </div>
             </div>
@@ -164,7 +164,8 @@
               />
             </svg>
           </nav>
-          <button>
+          <!-- add friend -->
+          <button @click="handleClose()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -180,6 +181,7 @@
               />
             </svg>
           </button>
+          <!--  -->
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -258,11 +260,15 @@
         </div>
       </div>
     </div>
+    <AddFiend v-show="addFiend" class="absolute" @close="addFiend = false" />
   </div>
 </template>
 <script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import AddFiend from "./AddFiend.vue";
+const router = useRouter();
 const open = ref(false);
 const showMenu = ref(false);
 const menuBox = ref(null);
@@ -319,4 +325,21 @@ const getUser = async (e) => {
 onMounted(() => {
   getUser();
 });
+// logout
+const LogOut = async () => {
+  try {
+    const res = await axios.post("http://localhost:8000/api/logout");
+    console.log("fisnish");
+    userStore.logout();
+    router.push("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+// AddFiend
+const addFiend = ref(false);
+
+const handleClose = () => {
+  addFiend.value = !addFiend.value;
+};
 </script>

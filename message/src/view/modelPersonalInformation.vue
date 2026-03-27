@@ -1,5 +1,8 @@
 <template>
-  <div class="w-screen h-screen flex justify-center items-center">
+  <div
+    @click.self="emit('close')"
+    class="w-screen h-screen flex justify-center items-center"
+  >
     <form action="" class="w-[350px] h-[450px] bg-white p-3 relative">
       <div class="w-full h-2/3 flex flex-col justify-between item-center gap-3">
         <div class="w-full flex justify-between item-center">
@@ -43,6 +46,7 @@
             type="text"
             :placeholder="user.name"
             class="w-full border h-[45px] rounded-[5px] p-3"
+            v-model="Name"
           />
         </div>
         <div class="w-full flex flex-col gap-2">
@@ -101,8 +105,10 @@
 <script setup>
 import axios from "axios";
 import { onMounted, ref } from "vue";
+const emit = defineEmits(["close", "reload"]);
 const birthday = ref("");
 const gender = ref("");
+const Name = ref("");
 const props = defineProps({
   id: String,
 });
@@ -130,17 +136,21 @@ onMounted(() => {
 
 const PostUser = async () => {
   try {
-    const res = await axios.post(
+    const res = await axios.put(
       `http://localhost:8000/api/updateUser/${props.id}`,
       {
-        name: user.value.name,
+        name: Name.value,
         gender: gender.value,
         birthday: birthday.value || null,
       },
     );
+
     console.log(res);
+    emit("reload");
+    emit("close");
   } catch (error) {
     console.log(error);
+    console.log("ERROR FROM LARAVEL:", error.response.data);
   }
 };
 </script>

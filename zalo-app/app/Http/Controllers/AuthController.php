@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRegisterRequest;
+use App\Http\Requests\updateUserRequest;
 use App\Http\Requests\UploadAvatarRequest;
 use App\Mail\welcomail;
 use App\Models\User;
@@ -28,6 +29,12 @@ class AuthController extends Controller
         return response()->json([
             'status' => false,
             'message' => 'Login failed'
+        ]);
+    }
+    public function logout(Request $request){
+        $request->user()->currentAccessToken()->delete();
+        return Response()->json([
+            'message'=>'LogOut Fisnish!'
         ]);
     }
     public function postRegister(PostRegisterRequest $request){
@@ -115,7 +122,7 @@ class AuthController extends Controller
     return response()->json(['error' => 'Không có file'], 400);
     }
 
-    public function updateUser(Request $request,$id){
+    public function updateUser(updateUserRequest $request,$id){
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->gender = $request->gender;
@@ -124,7 +131,7 @@ class AuthController extends Controller
         return response()->json([
             'message'=>'hoan thanh',
             'status'=>'ok',
-            $user
+            'user' => $user
         ]);
     }
 

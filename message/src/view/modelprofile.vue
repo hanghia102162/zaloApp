@@ -3,7 +3,10 @@
     @click.self="emit('close')"
     class="fixed inset-0 bg-black/40 flex justify-center items-center z-50"
   >
-    <form class="w-[400px] h-[760px] bg-white rounded shadow">
+    <form
+      v-show="!Openmodel"
+      class="w-[400px] h-[760px] bg-white rounded shadow"
+    >
       <div class="w-full h-1/3 flex flex-col gap-3 border-b-4 border-black">
         <h1 class="w-full flex justify-center items-center text-xl font-medium">
           Thông tin tài khoản
@@ -85,6 +88,7 @@
         <h2 class="font-medium">Thông tin kinh doanh</h2>
         <p>Tạo thông tin kinh doanh dể khách hàng biết đến bạn</p>
         <button
+          @click="Openmodel"
           class="w-full absolute bottom-0 flex justify-center items-center hover:bg-blue-500 h-[75px]"
         >
           <svg
@@ -142,14 +146,19 @@
         </button>
       </div>
     </form>
-    <ModelPersonalInformation v-show="Openmodel" :id="props.id" />
+    <ModelPersonalInformation
+      v-show="Openmodel"
+      :id="props.id"
+      @close="Openmodel = false"
+      @reload="getProfile"
+    />
   </div>
 </template>
 <script setup>
 import ModelPersonalInformation from "./modelPersonalInformation.vue";
 import axios from "axios";
 import { ref, onMounted } from "vue";
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "reload"]);
 //
 const props = defineProps({
   id: String,
