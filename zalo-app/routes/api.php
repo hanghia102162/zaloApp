@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddFriend;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -12,3 +13,7 @@ Route::get('/profile/{id}',[AuthController::class,'profileReturn']);
 
 Route::post('/handleImage/{id}',[AuthController::class,'handleImage']);
 Route::put('updateUser/{id}',[AuthController::class,'updateUser']);
+
+//add-Friend
+Route::get('searchFriend/{id}',[AddFriend::class,'searchFriend']);
+Route::post('AddFriend/{id}',[AddFriend::class,'AddFriend']);

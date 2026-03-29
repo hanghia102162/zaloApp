@@ -24,7 +24,16 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    // User.php
+    public function sentRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
 
+    public function receivedRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+}
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -47,4 +56,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }
