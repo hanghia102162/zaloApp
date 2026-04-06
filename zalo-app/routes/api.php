@@ -17,3 +17,6 @@ Route::put('updateUser/{id}',[AuthController::class,'updateUser']);
 //add-Friend
 Route::get('searchFriend/{id}',[AddFriend::class,'searchFriend']);
 Route::post('AddFriend/{id}',[AddFriend::class,'AddFriend']);
+Route::get('Sender/{id}',[AddFriend::class,'Sender']);
+Route::get('SendInvitations/{id}',[AddFriend::class,'SendInvitations']);
+

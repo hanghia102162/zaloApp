@@ -38,7 +38,7 @@ console.log(id);
       :id="id"
     />
     <Container class="flex-1" v-if="containerX" />
-    <FriendInvitation class="flex-1" v-if="openFriendInvitation" />
+    <FriendInvitation class="flex-1" v-if="openFriendInvitation" :id="id" />
     <ModelProfile v-if="openmodel" :id="id" @close="openmodel = false" />
   </div>
 </template>

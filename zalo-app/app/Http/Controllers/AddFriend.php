@@ -19,9 +19,9 @@ class AddFriend extends Controller
     public function AddFriend (Request $request,$id){
         $receiverId = $request->receiverId;
         if ($receiverId != $id){
-            FriendRequest::created([
-                'sender_id'=>'$id',
-                'receiver_id'=>'receiverId',
+            FriendRequest::create([
+                'sender_id'=>$id,
+                'receiver_id'=>$receiverId,
                 'status'=>'pending'
             ]);
             return response()->json([
@@ -32,5 +32,24 @@ class AddFriend extends Controller
         return response()->json([
             'Message'=>"thất bại"
         ]);
+    }
+    public function Sender($id){
+        $requests = FriendRequest::with('sender')
+                ->where('receiver_id',$id)
+                ->get();
+        $count = FriendRequest::where('receiver_id',$id)->count();
+                return response()->json([
+                    'data'=>$requests,
+                    'count'=>$count]);
+    }
+    public function SendInvitations($id){
+        $request = FriendRequest::with('receiver')
+        ->where('sender_id',$id)
+        ->get();
+        $count = FriendRequest::where('sender_id',$id)->count();
+        return response()->json([
+        'data' => $request,
+        'count'=>$count]);
+
     }
 }
