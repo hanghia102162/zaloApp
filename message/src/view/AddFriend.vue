@@ -36,7 +36,7 @@
           <button
             class="w-[20%] flex justify-center items-center rounded-[15px] text-white bg-blue-500"
             type="button"
-            @click="AddFiend(user.id)"
+            @click="AddFiend(item.id)"
           >
             Kết Bạn
           </button>

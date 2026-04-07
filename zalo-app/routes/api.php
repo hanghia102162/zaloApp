@@ -19,4 +19,7 @@ Route::get('searchFriend/{id}',[AddFriend::class,'searchFriend']);
 Route::post('AddFriend/{id}',[AddFriend::class,'AddFriend']);
 Route::get('Sender/{id}',[AddFriend::class,'Sender']);
 Route::get('SendInvitations/{id}',[AddFriend::class,'SendInvitations']);
+Route::delete('revokeInvitat/{id}',[AddFriend::class,'revokeInvitat']);
+Route::post('Accepted/{id}',[AddFriend::class,'Accepted']);
+Route::post('Rejected/{id}',[AddFriend::class,'Rejected']);
 

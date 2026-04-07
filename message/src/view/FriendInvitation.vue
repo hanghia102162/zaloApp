@@ -42,14 +42,24 @@
               </svg>
             </button>
           </nav>
-          <div class="w-full">
-            <p class="w-full h-[55px] bg-gray-400 shadow-xl">ssss</p>
+          <div class="w-full h-[55px] flex justify-center item-center">
+            <p
+              class="w-full flex justify-center item-center h-[55px] bg-gray-100 shadow-xl"
+            >
+              Xin chào mình muốn kết bạn với bạn
+            </p>
           </div>
           <div class="w-full flex gap-3">
-            <button class="flex-1 bg-white h-[55px] rounded-[15px]">
+            <button
+              class="flex-1 bg-white h-[55px] rounded-[15px]"
+              @click="Rejected(item.id)"
+            >
               Từ chối
             </button>
-            <button class="flex-1 bg-white h-[55px] rounded-[15px]">
+            <button
+              class="flex-1 bg-white h-[55px] rounded-[15px]"
+              @click="Accepted(item.id)"
+            >
               Đồng ý
             </button>
           </div>
@@ -95,7 +105,10 @@
             </button>
           </div>
           <div class="w-full flex justify-center">
-            <button class="w-[80%] h-[35px] bg-white rounded-[15px] shadow">
+            <button
+              class="w-[80%] h-[35px] bg-white rounded-[15px] shadow"
+              @click="revokeInvitat(x.id)"
+            >
               Thu hồi lời mời
             </button>
           </div>
@@ -136,11 +149,35 @@ onMounted(() => {
   sendInvitations();
 });
 // Thu hôi hồi lời mời
-const revokeInvitat = async () => {
+
+const revokeInvitat = async (id) => {
   try {
-    const res = await axios.post(
-      `http://localhost:8000/api/SendInvitations/${props.id}`,
+    const res = await axios.delete(
+      `http://localhost:8000/api/revokeInvitat/${id}`,
     );
+    sendinvitations.value = sendinvitations.value.filter(
+      (item) => item.id !== id,
+    );
+    console.log(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// dong y
+const Accepted = async (id) => {
+  try {
+    const res = await axios.post(`http://localhost:8000/api/Accepted/${id}`);
+    console.log(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+// tu choi loi moi
+const Rejected = async (id) => {
+  try {
+    const res = await axios.post(`http://localhost:8000/api/Rejected/${id}`);
+    console.log(res.data);
   } catch (error) {
     console.log(error);
   }

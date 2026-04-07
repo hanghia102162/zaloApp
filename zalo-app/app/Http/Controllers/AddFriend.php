@@ -36,20 +36,55 @@ class AddFriend extends Controller
     public function Sender($id){
         $requests = FriendRequest::with('sender')
                 ->where('receiver_id',$id)
+                ->where('status','pending')
                 ->get();
-        $count = FriendRequest::where('receiver_id',$id)->count();
+        $count = FriendRequest::where('receiver_id',$id)
+                ->where('status','pending')        
+                ->count();
                 return response()->json([
                     'data'=>$requests,
                     'count'=>$count]);
     }
+    // 
     public function SendInvitations($id){
         $request = FriendRequest::with('receiver')
         ->where('sender_id',$id)
         ->get();
-        $count = FriendRequest::where('sender_id',$id)->count();
+        $count = FriendRequest::where('sender_id',$id)
+        ->count();
         return response()->json([
         'data' => $request,
         'count'=>$count]);
 
+    }
+    public function revokeInvitat($id){
+        $request = FriendRequest::findOrFail($id);
+
+        $request->delete();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Thu hồi lời mời thành công'
+    ]);
+    }
+    // chap nhan ket ban
+    public function Accepted($id){
+        $request = FriendRequest::findOrFail($id);
+        $request->update([
+            'status'=>'accepted'
+        ]);
+        return response()->json([
+            'Message'=>'ket ban thanh cong!'
+        ]);
+    }
+    // khong chap nhan ket ban
+    public function Rejected($id){
+        $request = FriendRequest::findOrFail($id);
+        $request->update([
+            'status'=>'rejected'
+        ]);
+        return response()->json([
+            'message'=>'ko chap nhan ket ban thanh cong!'
+        ]);
     }
 }

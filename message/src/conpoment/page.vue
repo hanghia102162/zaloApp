@@ -3,12 +3,13 @@ import Container from "../view/Container.vue";
 import Sidebar from "../view/Sidebar.vue";
 import ModelProfile from "../view/modelprofile.vue";
 import FriendInvitation from "../view/FriendInvitation.vue";
+import ListFriend from "../view/ListFriend.vue";
 import { ref } from "vue";
 
 const openmodel = ref(false);
-const containerX = ref(true);
-const openFriendInvitation = ref(false);
-
+// const containerX = ref(true);
+// const openFriendInvitation = ref(false);
+const openListFriend = ref(true);
 const openModel = () => {
   openmodel.value = true;
 };
@@ -21,6 +22,7 @@ const OpenContainer = () => {
   openFriendInvitation.value = false;
 };
 import { useRoute } from "vue-router";
+import ListFriendVue from "../view/ListFriend.vue";
 
 const route = useRoute();
 
@@ -39,6 +41,7 @@ console.log(id);
     />
     <Container class="flex-1" v-if="containerX" />
     <FriendInvitation class="flex-1" v-if="openFriendInvitation" :id="id" />
+    <ListFriend class="flex-1" v-if="openListFriend" :id="id" />
     <ModelProfile v-if="openmodel" :id="id" @close="openmodel = false" />
   </div>
 </template>
