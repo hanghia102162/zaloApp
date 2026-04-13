@@ -3,7 +3,8 @@
 use App\Http\Controllers\AddFriend;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\FriendsController;
+use App\Models\Friends;
 
 Route::post('/register', [AuthController::class, 'postRegister']);
 Route::post('/checkEmail',[AuthController::class,'checkEmail']);
@@ -22,4 +23,7 @@ Route::get('SendInvitations/{id}',[AddFriend::class,'SendInvitations']);
 Route::delete('revokeInvitat/{id}',[AddFriend::class,'revokeInvitat']);
 Route::post('Accepted/{id}',[AddFriend::class,'Accepted']);
 Route::post('Rejected/{id}',[AddFriend::class,'Rejected']);
+
+// ListFriend
+Route::get('index/{id}',[FriendsController::class,'index']);
 

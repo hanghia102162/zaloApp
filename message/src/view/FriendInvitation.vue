@@ -167,7 +167,10 @@ const revokeInvitat = async (id) => {
 // dong y
 const Accepted = async (id) => {
   try {
-    const res = await axios.post(`http://localhost:8000/api/Accepted/${id}`);
+    const res = await axios.post(
+      `http://localhost:8000/api/Accepted/${id}`,
+      {},
+    );
     console.log(res.data);
   } catch (error) {
     console.log(error);

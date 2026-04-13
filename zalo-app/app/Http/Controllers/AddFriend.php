@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FriendRequest;
+use App\Models\Friends;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\Mime\Message;
@@ -44,6 +45,7 @@ class AddFriend extends Controller
                 return response()->json([
                     'data'=>$requests,
                     'count'=>$count]);
+                    // tra ve thong ng gui
     }
     // 
     public function SendInvitations($id){
@@ -69,9 +71,19 @@ class AddFriend extends Controller
     }
     // chap nhan ket ban
     public function Accepted($id){
-        $request = FriendRequest::findOrFail($id);
+        $request = FriendRequest::where('sender_id',$id);
+        $sender = $request->sender_id;
+        $receiver = $request->receiver_id;
         $request->update([
             'status'=>'accepted'
+        ]);
+        Friends::create([
+            'user_id' => $sender,
+            'friend_id'=> $receiver
+        ]);
+        Friends::create([
+            'user_id' => $receiver,
+            'friend_id'=> $sender
         ]);
         return response()->json([
             'Message'=>'ket ban thanh cong!'

@@ -144,7 +144,7 @@
       </div>
     </div>
     <!-- sidebar-top -->
-    <div class="w-[75%] flex-col h-screen">
+    <div class="w-[75%] flex-col h-screen hidden sm:block">
       <div class="bg-blue-200 h-[15%] relative">
         <div class="flex justify-between p-3 gap-3">
           <nav class="relative">
@@ -264,7 +264,10 @@
       </div>
       <!-- side-bottom-addfriend -->
       <div class="flex-1 h-[85%] shadow-xl p-3" v-show="siderbarAddfriend">
-        <nav class="flex gap-3 w-full h-[45px] items-center">
+        <button
+          class="flex gap-3 w-full h-[45px] items-center hover:bg-blue-500"
+          @click="OpenListFriend"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -280,7 +283,7 @@
             />
           </svg>
           <h3>Danh Sách bạn bè</h3>
-        </nav>
+        </button>
         <nav class="flex gap-3 w-full h-[45px] items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -360,6 +363,7 @@ const emit = defineEmits([
   "openProfile",
   "openFriendInvitation",
   "openContainer",
+  "OpenListFriend",
 ]);
 
 onMounted(() => {
@@ -447,6 +451,10 @@ const openFriendInvitation = () => {
 };
 //
 const OpenContainer = () => {
-  emit("OpenContainer");
+  emit("openContainer");
+};
+//
+const OpenListFriend = () => {
+  emit("OpenListFriend");
 };
 </script>

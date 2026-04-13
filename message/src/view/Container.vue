@@ -12,7 +12,7 @@
           />
         </div>
         <div>
-          <h2>Hà Trọng Nghĩa</h2>
+          <h2>{{ chatUser?.name }}</h2>
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -283,4 +283,8 @@ const handleKeyEnter = (e) => {
     sendMessage();
   }
 };
+//nhan user
+const props = defineProps({
+  chatUser: Object,
+});
 </script>
